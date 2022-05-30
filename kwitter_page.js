@@ -1,0 +1,48 @@
+//YOUR FIREBASE LINKS
+var firebaseConfig = {
+      apiKey: "AIzaSyCDaX0TfbZR5163tNUz2mWl_YWKoggikUA",
+      authDomain: "kwitter-634d3.firebaseapp.com",
+      databaseURL: "https://kwitter-634d3-default-rtdb.firebaseio.com",
+      projectId: "kwitter-634d3",
+      storageBucket: "kwitter-634d3.appspot.com",
+      messagingSenderId: "446665404740",
+      appId: "1:446665404740:web:fd55a219e02359d532e711"
+    };
+    
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+
+    
+    
+    user_name = localStorage.getItem("user_name"); 
+    room_name = localStorage.getItem("room_name");
+    
+function send()
+{
+      msg = document.getElementById("msg").value;
+      firebase.database().ref(room_name).push({
+            name:user_name,
+            message:msg,
+            like:0
+      });
+
+      document.getElementById("msg").value = "";
+}
+
+ function getData() { firebase.database().ref("/"+room_name).on('value', function(snapshot) { document.getElementById("output").innerHTML = ""; snapshot.forEach(function(childSnapshot) { childKey  = childSnapshot.key; childData = childSnapshot.val(); if(childKey != "purpose") {
+         firebase_message_id = childKey;
+         message_data = childData;
+//Start code
+
+//End code
+      } });  }); }
+getData();
+
+
+function logout()
+{
+      localStorage.removeItem("user_name");
+      localStorage.removeItem("room_name");
+      window.location = "index.html";
+}
+
